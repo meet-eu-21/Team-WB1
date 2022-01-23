@@ -37,5 +37,5 @@ For each chromosome the program checks if there is a principal component that co
   -a MIN_ARM_SCORE, --min_arm_score MIN_ARM_SCORE
                         If arm_score of a principal component is higher than
                         min_arm_score than it can be removed (between 0 and 1,
-                        recommended values: 0.5-0.75
+                        recommended values: 0.6-0.9
 ```
