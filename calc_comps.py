@@ -28,7 +28,7 @@ if __name__ == '__main__':
                         help="Maximum number of compartments to consider")
     parser.add_argument("-a", "--min_arm_score", type=float, default=0.7, 
                         help="If arm_score of a principal component is higher than min_arm_score than it can be removed \
-                        (between 0 and 1, recommended values: 0.5-0.75")
+                        (between 0 and 1, recommended values: 0.6-0.9")
 
     args = parser.parse_args()
 
