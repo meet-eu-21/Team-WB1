@@ -105,6 +105,8 @@ def observed_expected(OE):
 	while j<L:
 		thediag=np.diag(OE,k=j)
 		mtg=np.mean(thediag)
+		if mtg == 0:
+			mtg = 1e-8
 		while i<(L-j):
 			v=OE[i,i+j]/mtg
 			OE[i,i+j]=v
