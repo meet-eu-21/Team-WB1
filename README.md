@@ -7,7 +7,7 @@ Topic B : Chromosome compartments
 We tried to use HMM for detecting compartments and noticed that when we use division to three compartments, two of the detected compartments have very similar epigenetic profiles (which suggest that they shouldn't have been divided to separate compartments) but lay on different chromosome arms. Then we performed Principal Component Analysis and noticed that often there is one component that corresponds to chromosome arms (it is positive on one arm and negative on the other arm). To remove the arm bias we tried running HMM on 6 first principal components, except the component which corresponds the most to the chromosome arms (so 5 out of 6 components). 
 
 ## Basic pipeline
-You should first download the data from http://www.lcqb.upmc.fr/meetu/dataforstudent/  
+You should first download intrachromosomal HiC data and epigenetic data from http://www.lcqb.upmc.fr/meetu/dataforstudent/  
 Then preprocess HiC matrices and the file with epigenetic marks using ```preprocess_mtx.py``` and ```preprocess_epi.py```.
 Finally you can run the analysis with ```calc_comps.py```.
 
@@ -39,3 +39,13 @@ For each chromosome the program checks if there is a principal component that co
                         min_arm_score than it can be removed (between 0 and 1,
                         recommended values: 0.6-0.9
 ```
+
+	100kb_resolution_intrachromosomal
+## Results
+Predictions for 5 cell lines (GM12878, HMEC, HUVEC, IMR90 and NHEK) using Hi-C data at 100kB resolution can be found 
+in results folders. 
+The folder named "results_full" contains the results obtained using --cmp_consensus option and the folder 
+"results_separate" contains separate results for each chromosome, allowing for differences in optimal number 
+of compartments between them. Each folder also contains plots comparing self-developed compartmentalisation score
+between running HMM on 6 PC and 5 PC (without the arm component).
+

@@ -10,15 +10,15 @@ def process_matrix(mfile, out_mtx, file_ind):
     R = 100000
     A = np.loadtxt(mfile)
     A = np.int_(A)
-    A = np.concatenate((A,np.transpose(np.array([A[:,1],A[:,0],A[:,2]]))), axis=0)
-    A = sparse.coo_matrix( (A[:,2], (A[:,0],A[:,1])))
-    A = bin2d(A,R,R)
-    A, ind = filteramat(A) # [0] - mtx , [1] -vector with index
+    A = np.concatenate((A, np.transpose(np.array([A[:, 1], A[:, 0], A[:, 2]]))), axis=0)
+    A = sparse.coo_matrix((A[:, 2], (A[:, 0], A[:, 1])))
+    A = bin2d(A, R, R)
+    A, ind = filteramat(A)  # [0] - mtx , [1] -vector with index
     A = SCN(A.copy())
     A = observed_expected(A)
     A = np.corrcoef(A)
 
-    # save processed matix 
+    # save processed matrix
     np.save(out_mtx, A)
     # save indices
     np.save(file_ind, ind)
@@ -26,13 +26,14 @@ def process_matrix(mfile, out_mtx, file_ind):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--input_dir", type=dir_exists, help="HiC directory (containing cell line directories)", required=True)
-    parser.add_argument("-o", "--out_dir", type=str, default="preprocessed", help="Directory for saving the preprocessed data")
+    parser.add_argument("-i", "--input_dir", type=dir_exists, help="HiC directory (containing cell line directories)",
+                        required=True)
+    parser.add_argument("-o", "--out_dir", type=str, default="preprocessed",
+                        help="Directory for saving the preprocessed data")
     args = parser.parse_args()
-    
+
     HiC_dir = args.input_dir
     out_dir = args.out_dir
-
 
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
@@ -49,7 +50,7 @@ if __name__ == '__main__':
             file_path = os.path.join(gm_path, file)
             fileout = os.path.join(out_path, file.replace(".RAWobserved", "_processed"))
             fileout_ind = os.path.join(out_path, file.replace(".RAWobserved", "_indices"))
-            print('Processing file', file, "\n Results will be saved at:" , fileout_ind)
+            print('Processing file', file, "\n Results will be saved at:", fileout_ind)
             process_matrix(file_path, fileout, fileout_ind)
 
     # other cell lines
@@ -68,5 +69,5 @@ if __name__ == '__main__':
                         file_path = os.path.join(chromosome, file)
                         fileout = os.path.join(out_path, file.replace(".RAWobserved", "_processed"))
                         fileout_ind = os.path.join(out_path, file.replace(".RAWobserved", "_indices"))
-                        print('Processing file', file, "\n Results will be saved at:" , fileout_ind)
+                        print('Processing file', file, "\n Results will be saved at:", fileout_ind)
                         process_matrix(file_path, fileout, fileout_ind)
